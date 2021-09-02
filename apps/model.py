@@ -90,25 +90,17 @@ def app():
                             'Shipment Mode', 'Product Group', 'Sub Classification', 'Vendor', 
                             'Item Description', 'Molecule/Test Type', 'Brand', 'Dosage', 'Dosage Form', 
                             'Manufacturing Site', 'First Line Designation']
-        #print(label_enc)
-        #print(input_lst)
+        
         X = []
+        
+        # Creating the list of numerical values
         for column in input_lst.index:
-            print(column)
             if column in categorical_types:
                 X.append(int(label_enc[column].transform([input_lst[column]])[0]))
             else:
                 X.append(int(input_lst[column]))
-        X = pd.DataFrame([np.array(X).T], columns=input_lst.index)
-        #X.to_csv("check.csv")
-        print(X)
-        print(X.shape)
-        prediction = model.predict(X)
-        #print(prediction)
-        #output=round(prediction[0])
-        #st.success("Unit Price is:- ".format(output))
 
-
-#Managed By, Sub Classification, Unit of Measure (Per Pack), Line Item Quantity, Dosage Form, Product Group, Molecule/Test Type, Weight (Kilograms), Item Description, Fulfill Via, First Line Designation, Freight Cost (USD), Line Item Value, Vendor INCO Term, Manufacturing Site, Project Code, Line Item Insurance (USD), Pack Price, Shipment Mode
-
-#Manufacturing_Site, Sub_Classification, Molecule_Test_Type, Pack_Price, Vendor_INCO_Term, Line_Item_Value, Item_Description, Project_Code, Managed_By, Freight_Cost, Dosage_Form, Line_Item_Insurance, Product_Group, First_Line_Designation, Shipment_Mode, Line_Item_Quantity, Weight, Unit_of_Measure, Fulfill_Via
+        prediction = model.predict(np.array([X]))
+        print("Prediction: ",prediction)
+        output=round(prediction[0])
+        st.success("Unit Price is:- ".format(output))
